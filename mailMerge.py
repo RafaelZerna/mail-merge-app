@@ -8,8 +8,8 @@ from email.mime.text import MIMEText
 
 # Loads credentials from .env file
 load_dotenv()
-SENDER = environ.get('SENDER')
-PASSWORD = environ.get('PASSWORD')
+SENDER_EMAIL = environ.get('SENDER_EMAIL')
+SENDER_PASSWORD = environ.get('SENDER_PASSWORD')
 
 # SMTP server DO NOT CHANGE
 SERVER = SMTP("smtp.gmail.com", 587)
@@ -22,17 +22,9 @@ DATABASE_FILENAME = join('.',DATABASE_FILENAME)
 BODY_FILENAME = ''
 BODY_FILENAME = join('.',BODY_FILENAME)
 
-# Sender's name at the closing signature
+# Fields
 FROM = ''
-
-# Email subject
 SUBJECT = ''
-
-
-
-
-
-
 
 
 
@@ -40,7 +32,7 @@ SUBJECT = ''
 def initEmailService():
     try:
         SERVER.starttls()
-        SERVER.login(SENDER, PASSWORD)
+        SERVER.login(SENDER_EMAIL, SENDER_PASSWORD)
         print("Logged in")
     except:
         print("Error when logging in. Please check your user email and password.")
@@ -80,7 +72,7 @@ def sendEmail(fields,contact):
 
 # Uses a csv database to send emails with the fields from the csv file
 def sendEmails():
-    #try:
+    try:
         
         # Read database contents and send emails
         with open(DATABASE_FILENAME, 'r') as file:
@@ -94,9 +86,9 @@ def sendEmails():
         with open(DATABASE_FILENAME, 'w') as file:
             file.close()
 
-        """except:
+    except:
         print("Error with the database file. Please recheck filename.")
-        quit()"""
+        quit()
 
 initEmailService()
 sendEmails()
