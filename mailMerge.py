@@ -1,30 +1,31 @@
 from csv import DictReader
 from smtplib import SMTP
-from dotenv import load_dotenv
-from os import environ
 from os.path import join
 from email.message import EmailMessage
 from email.mime.text import MIMEText
 
-# Loads credentials from .env file
-load_dotenv()
-SENDER_EMAIL = environ.get('SENDER_EMAIL')
-SENDER_PASSWORD = environ.get('SENDER_PASSWORD')
+
+
+# Credentials
+SENDER_EMAIL = input('Sender Email: ')
+SENDER_PASSWORD = input('App Password: ')
+
+# Fields
+FROM = input('From: ')
+SUBJECT = input('Subject: ')
+
+# Name of the email body (HTML or plain text only)
+BODY_FILENAME = input('Body Filename: ')
+BODY_FILENAME = join('.',BODY_FILENAME)
+
+# CSV database
+DATABASE_FILENAME = input('CSV Filename: ')
+DATABASE_FILENAME = join('.',DATABASE_FILENAME)
+
+
 
 # SMTP server DO NOT CHANGE
 SERVER = SMTP("smtp.gmail.com", 587)
-
-# CSV database
-DATABASE_FILENAME = ''
-DATABASE_FILENAME = join('.',DATABASE_FILENAME)
-
-# Name of the email body (HTML or plain text only)
-BODY_FILENAME = ''
-BODY_FILENAME = join('.',BODY_FILENAME)
-
-# Fields
-FROM = ''
-SUBJECT = ''
 
 
 
