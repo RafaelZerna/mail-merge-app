@@ -14,13 +14,13 @@ SENDER_PASSWORD = input('App Password: ')
 FROM = input('From: ')
 SUBJECT = input('Subject: ')
 
-# Name of the email body (HTML or plain text only)
-BODY_FILENAME = input('Body Filename: ')
-BODY_FILENAME = join('.',BODY_FILENAME)
+# Email body (HTML or plain text only)
+BODY_PATH = input('Body Filename: ')
+BODY_PATH = join('.',BODY_PATH)
 
 # CSV database
-DATABASE_FILENAME = input('CSV Filename: ')
-DATABASE_FILENAME = join('.',DATABASE_FILENAME)
+CSV_PATH = input('CSV Filename: ')
+CSV_PATH = join('.',CSV_PATH)
 
 
 
@@ -42,7 +42,7 @@ def initEmailService():
 # Constructs body of the email message from an html file
 def constructBody(fields, contact):
     try:
-        with open(BODY_FILENAME, 'r', encoding="utf-8") as file:
+        with open(BODY_PATH, 'r', encoding="utf-8") as file:
             body = ''.join(file.readlines())
             body = body.replace("[ sign off ]", FROM)
             for field in fields:
@@ -76,7 +76,7 @@ def sendEmails():
     try:
         
         # Read database contents and send emails
-        with open(DATABASE_FILENAME, 'r') as file:
+        with open(CSV_PATH, 'r') as file:
             contacts = DictReader(file)
             fields = contacts.fieldnames
             for contact in contacts:
@@ -84,7 +84,7 @@ def sendEmails():
             file.close()
         
         # Deletes database content (just in case, nakakahiya kapag nagspam)
-        with open(DATABASE_FILENAME, 'w') as file:
+        with open(CSV_PATH, 'w') as file:
             file.close()
 
     except:
